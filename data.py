@@ -25,6 +25,7 @@ df['amount'] = df['amount'].astype('float')
 df['date'] = df['date'].str.replace('05/072018','05/07/2018')
 df['date'] = pd.to_datetime(df['date'])
 df['year'] = df['date'].dt.year
+df['month'] = df['date'].dt.month
 #print(df.info())
 startup_list = df['startup'].unique().tolist()
 investor_list = list(set(df['investors'].str.split(',').sum()))
@@ -36,12 +37,21 @@ def investor_detail(investor):
     df4 = df[df['investors'].str.contains(investor)].groupby('round')['amount'].sum()
     df5 = df[df['investors'].str.contains(investor)].groupby('city')['amount'].sum()
     df6 = df[df['investors'].str.contains(investor)].groupby('year')['amount'].sum()
-    print(df5)
     return(df1,df2,df3,df4,df5,df6)
 
-
-
+def overall_detail():
+    sum = df['amount'].sum()
+    max = df.groupby('startup')['amount'].max().sort_values(ascending=False).head(1).values[0]
+    avg = df.groupby('startup')['amount'].sum().mean()
+    Total_fund_startup = df['startup'].nunique()   
+    df['x-axis'] = df['year'].astype('str') + '-' + df['month'].astype('str')
+    MOM_count = df.groupby(['x-axis'])['amount'].count().reset_index()
+    #print(MOM_count)
+    MOM_total = df.groupby(['x-axis'])['amount'].sum().reset_index()
+    #print(MOM_total)
+    #print(df)
+    return(sum,max,avg,Total_fund_startup,MOM_count,MOM_total)
     
 
 
-#investor_detail(' IDG Ventures')
+overall_detail()

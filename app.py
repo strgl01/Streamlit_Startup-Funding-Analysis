@@ -20,7 +20,7 @@ if selection == 'Startup':
     st.balloons()
 if selection == 'Investor':
     st.title('Investor')
-    selection2 = st.sidebar.selectbox('Select Startup',db.investor_list)
+    selection2 = st.sidebar.selectbox('Select Investor',db.investor_list)
     btn2 = st.sidebar.button('Find Investor Details')
     if btn2:
         st.title(selection2)
@@ -72,6 +72,37 @@ if selection == 'Investor':
     
 else:
     st.title('Overall Analysis')
+    sum,max,avg,Total_fund_startup,MOM_count,MOM_total = db.overall_detail()
+    c5,c6,c7,c8 = st.columns(4)
+    with c5:
+        st.metric('Total Investment',sum)
+    
+    with c6:
+        st.metric('Maximum Investment',max)
+    
+    with c7:
+        st.metric('Average Investment',round(avg))
+
+    with c8:
+        st.metric('Total Funded Startup',Total_fund_startup)
+
+    selection3 = st.selectbox('Option',['Count','Amount'])
+
+    st.subheader('MOM Investment on basis of ' + selection3)
+
+    if selection3 == 'Count':
+        fg5,ax5 = plt.subplots()
+
+        ax5.plot(MOM_count['x-axis'],MOM_count['amount'])
+        st.pyplot(fg5)
+
+    if selection3 == 'Amount':
+        fg5,ax5 = plt.subplots()
+
+        ax5.plot(MOM_total['x-axis'],MOM_total['amount'])
+        st.pyplot(fg5)
+
+    
     st.balloons()
 
 
