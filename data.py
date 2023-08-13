@@ -51,7 +51,12 @@ def overall_detail():
     #print(MOM_total)
     #print(df)
     return(sum,max,avg,Total_fund_startup,MOM_count,MOM_total)
-    
+
+def startup_analysis(startup):
+    industry = df[df['startup'] == startup]['vertical'].reset_index().iloc[0,1]
+    subindustry = df[df['startup'] == startup]['subvertical'].reset_index().iloc[0,1]
+    city = df[df['startup'] == startup]['city'].reset_index().iloc[0,1]
+    funding_df = df[df['startup'] == startup][['round','investors','date']]
+    return(industry,subindustry,city,funding_df)
 
 
-overall_detail()

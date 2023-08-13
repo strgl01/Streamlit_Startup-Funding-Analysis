@@ -14,11 +14,30 @@ if selection == 'Startup':
     btn1 = st.sidebar.button('Find Startup Details')
     if btn1:
         st.title(selection1)
-        st.dataframe(db.investor_detail(selection1))
+        industry,subindustry,city,funding_df = db.startup_analysis(selection1)
+        c8,c10 = st.columns(2)
+        with c8:
+            st.metric('Industry',industry)
+
+        # with c9:
+        #     st.metric('Sub Industry',subindustry)
+
+        with c10:
+            st.metric('City',city)
+
+        st.subheader('Sub Industry')
+        st.write(subindustry)
+
+        st.subheader('Funding Details')
+        st.dataframe(funding_df)
         st.balloons()
-        #print(db.investor_detail(selection2))
-    st.balloons()
-if selection == 'Investor':
+
+       
+    
+
+
+
+elif selection == 'Investor':
     st.title('Investor')
     selection2 = st.sidebar.selectbox('Select Investor',db.investor_list)
     btn2 = st.sidebar.button('Find Investor Details')
