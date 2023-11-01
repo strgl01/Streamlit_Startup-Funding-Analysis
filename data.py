@@ -23,7 +23,7 @@ df['amount'] = df['amount'].str.replace('unknown','0')
 df['amount'] = df['amount'].str.replace('Undisclosed','0')
 df['amount'] = df['amount'].astype('float')
 df['date'] = df['date'].str.replace('05/072018','05/07/2018')
-df['date'] = pd.to_datetime(df['date'])
+df['date'] = pd.to_datetime(df['date'],errors='coerce')
 df['year'] = df['date'].dt.year
 df['month'] = df['date'].dt.month
 #print(df.info())
